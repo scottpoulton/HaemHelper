@@ -1,4 +1,3 @@
-```markdown
 # HaemHelper: Peripheral Blood Smear Classification
 
 This repository contains the data engineering and PyTorch training infrastructure for HaemHelper, a lightweight multi-class image classification pipeline designed for haematology diagnostics and peripheral blood smear analysis.
@@ -13,9 +12,11 @@ This repository contains the data engineering and PyTorch training infrastructur
 ## File Structure
 
 ```text
-├── haematology_loader.py    # ImageNet standardisation, morphological augmentation, and train/val splitting
-├── train_haematology.py     # Core production training loop with learning rate scheduling
-└── README.md                # Project documentation
+├── src/
+│   ├── haematology_loader.py    # ImageNet standardisation, morphological augmentation, and train/val splitting
+│   ├── model.py                 # Feature extractor backbone (ResNet18)
+│   └── train_haematology.py     # Core production training loop with learning rate scheduling
+└── README.md                    # Project documentation
 
 ```
 
@@ -30,5 +31,4 @@ pip install torch torchvision
 # 2. Boot the training loop
 python3 train_haematology.py
 
-```
 ```
