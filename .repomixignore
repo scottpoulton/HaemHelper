@@ -1,0 +1,9 @@
+# Ignore heavy static assets and SVGs when packing context
+src/assets/
+public/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+repomix-output*.xml
+.aistudio/
+metadata.json

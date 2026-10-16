@@ -1,5 +1,15 @@
 import { CellaVisionClassId } from '../types';
-import { CELLAVISION_CLASSES } from './cellDefinitions';
+import monolayerWidefieldImg from '../assets/images/monolayer_widefield_smear_1792129887070.jpg';
+import bloodSmearMonolayerImg from '../assets/images/blood_smear_monolayer_1792129507828.jpg';
+import neutrophilImg from '../assets/images/microscopy_neutrophil_1792129505476.jpg';
+import bandNeutrophilImg from '../assets/images/microscopy_band_neutrophil_1792129832293.jpg';
+import myeloblastImg from '../assets/images/microscopy_myeloblast_1792129505437.jpg';
+import lymphocyteImg from '../assets/images/microscopy_lymphocyte_1792129817282.jpg';
+import reactiveLymphocyteImg from '../assets/images/microscopy_reactive_lymphocyte_1792129860988.jpg';
+import plasmaCellImg from '../assets/images/microscopy_plasma_cell_1792129873701.jpg';
+import monocyteImg from '../assets/images/microscopy_monocyte_1792129507454.jpg';
+import eosinophilImg from '../assets/images/microscopy_eosinophil_1792129506942.jpg';
+import basophilImg from '../assets/images/microscopy_basophil_1792129846451.jpg';
 
 export interface ReferenceAtlasEntry {
   classId: CellaVisionClassId;
@@ -14,24 +24,24 @@ export interface ReferenceAtlasEntry {
   realPhotoUrl?: string;
 }
 
-export const REAL_SLIDE_MONOLAYER_IMAGE = '/src/assets/images/monolayer_widefield_smear_1792129887070.jpg';
-export const REAL_SLIDE_OIL_OVERVIEW_IMAGE = '/src/assets/images/blood_smear_monolayer_1792129507828.jpg';
+export const REAL_SLIDE_MONOLAYER_IMAGE = monolayerWidefieldImg;
+export const REAL_SLIDE_OIL_OVERVIEW_IMAGE = bloodSmearMonolayerImg;
 
 export const REAL_CELL_PHOTO_MAP: Record<CellaVisionClassId, string> = {
-  segmented_neutrophil: '/src/assets/images/microscopy_neutrophil_1792129505476.jpg',
-  band_neutrophil: '/src/assets/images/microscopy_band_neutrophil_1792129832293.jpg',
-  metamyelocyte: '/src/assets/images/microscopy_band_neutrophil_1792129832293.jpg',
-  myelocyte: '/src/assets/images/microscopy_neutrophil_1792129505476.jpg',
-  promyelocyte: '/src/assets/images/microscopy_myeloblast_1792129505437.jpg',
-  blast: '/src/assets/images/microscopy_myeloblast_1792129505437.jpg',
-  lymphocyte: '/src/assets/images/microscopy_lymphocyte_1792129817282.jpg',
-  reactive_lymphocyte: '/src/assets/images/microscopy_reactive_lymphocyte_1792129860988.jpg',
-  plasma_cell: '/src/assets/images/microscopy_plasma_cell_1792129873701.jpg',
-  monocyte: '/src/assets/images/microscopy_monocyte_1792129507454.jpg',
-  eosinophil: '/src/assets/images/microscopy_eosinophil_1792129506942.jpg',
-  basophil: '/src/assets/images/microscopy_basophil_1792129846451.jpg',
-  smudge_cell: '/src/assets/images/microscopy_lymphocyte_1792129817282.jpg',
-  unclassified: '/src/assets/images/microscopy_neutrophil_1792129505476.jpg',
+  segmented_neutrophil: neutrophilImg,
+  band_neutrophil: bandNeutrophilImg,
+  metamyelocyte: bandNeutrophilImg,
+  myelocyte: neutrophilImg,
+  promyelocyte: myeloblastImg,
+  blast: myeloblastImg,
+  lymphocyte: lymphocyteImg,
+  reactive_lymphocyte: reactiveLymphocyteImg,
+  plasma_cell: plasmaCellImg,
+  monocyte: monocyteImg,
+  eosinophil: eosinophilImg,
+  basophil: basophilImg,
+  smudge_cell: lymphocyteImg,
+  unclassified: neutrophilImg,
 };
 
 export const REFERENCE_ATLAS: Record<CellaVisionClassId, ReferenceAtlasEntry> = {

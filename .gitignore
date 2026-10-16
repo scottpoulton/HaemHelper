@@ -1,0 +1,17 @@
+# Dependencies & Build
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# AI / Vibe-Coding Artifacts
+.aistudio/
+metadata.json
+repomix-output*.xml
+*.repomix.*
+
+# OS & Editor
+.DS_Store
+.vscode/
+.idea/
+*.log

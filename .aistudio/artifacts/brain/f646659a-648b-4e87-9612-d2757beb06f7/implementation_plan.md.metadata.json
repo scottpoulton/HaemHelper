@@ -1,6 +1,0 @@
-{
-  "summary": "Architectural implementation plan to transform HaemHelper into a CellaVision digital morphology workstation, featuring multi-cell pre-classification galleries, interactive technologist reclassification, whole-slide monolayer navigation, reference atlas comparison, and clinical pathologist sign-off reporting.",
-  "updatedAt": "2026-10-16T05:02:40.391690171Z",
-  "requestFeedback": true,
-  "userFacing": true
-}

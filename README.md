@@ -1,25 +1,63 @@
-# HaemHelper: CellaVision Digital Morphology & PyTorch Training Suite
+# HaemHelper
 
-HaemHelper is a clinical digital morphology workstation and interactive PyTorch suite for automated peripheral blood smear analysis, multi-class leukocyte classification, and laboratory differential verification—modeled after clinical **CellaVision** systems.
+HaemHelper is a digital peripheral blood smear workstation and PyTorch classification pipeline. It combines an interactive 100-cell leukocyte differential interface (modeled on clinical CellaVision review workflows) with a ResNet-18 training and ONNX browser inference pipeline.
 
-## Key Workflows & Features
+## Overview
 
-* **CellaVision Pre-Classification Gallery Grid:** Scans and presents 100+ individual localized leukocytes organized by lineage into distinct category groups (Segmented Neutrophils, Bands, Metamyelocytes, Myelocytes, Promyelocytes, Blasts, Reactive Lymphocytes, Monocytes, Eosinophils, Basophils, Plasma Cells, Smudge Cells).
-* **Interactive Technologist Reclassification:** 1-click and rapid keyboard hotkey reclassification (`S` for Seg, `B` for Band, `T` for Meta, `Y` for Myelo, `P` for Pro, `X` for Blast, `L` for Lymph, `R` for Reactive Lymph, `M` for Mono, `E` for Eos, `A` for Baso).
-* **High-Magnification Cell Inspector & Oil Immersion Reticle:** High-resolution digital zoom with spatial monolayer coordinate tracking `(X, Y in µm)`.
-* **Dual-Cell Reference Atlas Comparator:** Side-by-side split screen comparing suspected patient cells against textbook gold-standard reference cells with diagnostic hallmarks and differential pitfalls.
-* **Erythrocyte (RBC) Morphology Matrix:** Semi-quantitative grading (0 to 3+) for anisocytosis, poikilocytosis, hypochromia, polychromasia, target cells, schistocytes, spherocytes, teardrops, and Howell-Jolly bodies.
-* **Platelet Estimation:** Average platelets per 100x oil field multiplied by laboratory factor to verify against automated hematology analyzer counts and detect pseudothrombocytopenia.
-* **Laboratory Validation & Pathologist Sign-Off:** Full audit tracking comparing AI pre-classification accuracy vs. technologist verified counts, senior pathologist diagnostic comments, and exportable/printable reports.
-* **Multi-Case Worklist & Custom Upload:** Pre-loaded clinical cases (Septic Left Shift, Accelerated CML, Mononucleosis, Acute Leukaemia Blast Crisis, Normal Adult Screen) and custom multi-cell blood smear import.
-* **PyTorch ResNet-18 Infrastructure:** Interactive training studio, `ReduceLROnPlateau` scheduling, morphological data augmentation simulator, model graph layer inspector, and original source exporter.
+The project is split into two parts:
+1. **Frontend Morphology Workstation (`src/`):** A React + TypeScript interface for reviewing pre-classified peripheral blood smears, reclassifying leukocytes via keyboard hotkeys or drag-and-drop, grading erythrocyte (RBC) morphology, estimating platelet counts from 100x oil-immersion fields, and comparing cells side-by-side against a reference atlas.
+2. **PyTorch Training & ONNX Export (`python/`):** A torchvision `ImageFolder` data loader with orientation/stain augmentations, a fine-tuned ResNet-18 model definition, a training script with `ReduceLROnPlateau` scheduling, and an ONNX exporter for running client-side inference via `onnxruntime-web`.
 
-## Running Locally
+## Key Features
+
+- **100-Cell Leukocyte Differential:** Group-by-lineage gallery supporting 1-click verification, drag-and-drop bucket reassignment, and keyboard hotkeys (`S` Seg, `B` Band, `T` Meta, `Y` Myelo, `P` Pro, `X` Blast, `L` Lymph, `R` Reactive Lymph, `M` Mono, `E` Eos, `A` Baso).
+- **Side-by-Side Reference Comparator:** Inspect patient cells under a 100x oil-immersion reticle alongside reference micrographs, nuclear-to-cytoplasmic (N:C) ratios, chromatin descriptions, and common differential pitfalls.
+- **RBC & Platelet Grading:** Semi-quantitative (0 to 3+) grading for anisocytosis, poikilocytosis, schistocytes, teardrops, and polychromasia, plus a 100x field platelet estimator (`average per field × 15`) to cross-check automated analyzer counts.
+- **Whole-Slide Monolayer Cropper:** Pan and zoom across peripheral smear scans, click individual leukocytes to crop 160×160px patches via HTML5 canvas, and append them to the active differential.
+- **Client-Side ONNX Inference:** Run exported `.onnx` checkpoints directly in the browser using WebAssembly (`onnxruntime-web`), with a deterministic simulation fallback when local weights are not present.
+
+## Repository Structure
+
+```text
+├── python/
+│   ├── haematology_loader.py   # ImageFolder dataset & stain/rotation augmentations
+│   ├── model.py                # ResNet-18 backbone with Dropout(0.5) + Linear head
+│   ├── train_haematology.py    # Training loop with ReduceLROnPlateau & checkpointing
+│   ├── export_onnx.py          # Exports .pth state_dict to public/models/haem_resnet18.onnx
+│   └── requirements.txt        # Python dependencies
+├── src/
+│   ├── components/             # Workstation UI, cell inspector, RBC/PLT grading,modals
+│   ├── data/                   # Pre-loaded clinical cases & reference morphology criteria
+│   ├── utils/                  # ONNX runtime wrapper & normalization utilities
+│   └── types.ts                # TypeScript interfaces
+└── package.json
+
+```
+
+## Getting Started
+
+### 1. Run the Web Workstation
 
 ```bash
-# 1. Install dependencies
 npm install
-
-# 2. Start the development server
 npm run dev
+
+```
+
+The application will start at `http://localhost:3000`.
+
+### 2. Train & Export the PyTorch Model (Optional)
+
+To train the ResNet-18 classifier on your own peripheral blood smear dataset (organized by class folders under `python/data/haematology/`) and export it for browser inference:
+
+```bash
+cd python
+pip install -r requirements.txt
+
+# Train model and save best checkpoint
+python train_haematology.py --data-dir ./data/haematology --epochs 50 --out haematology_production.pth
+
+# Export checkpoint (or initialized architecture) to ONNX for the web app
+python export_onnx.py --checkpoint haematology_production.pth --out ../public/models/haem_resnet18.onnx
+
 ```

@@ -219,7 +219,7 @@ export const INITIAL_CELLAVISION_CASES: ClinicalPatientCase[] = [
       mch: 29.4,
       mchc: 33.2,
       plt: 24,
-      flags: ['CRITICAL PAN増CYTOPENIA', 'BLASTS / SUSPECTED LEUKAEMIA', 'THROMBOCYTOPENIA < 50', 'ANAEMIA ALERT'],
+      flags: ['CRITICAL PANCYTOPENIA', 'BLASTS / SUSPECTED LEUKAEMIA', 'THROMBOCYTOPENIA < 50', 'ANAEMIA ALERT'],
     },
     rbcGrading: {
       anisocytosis: 2,
