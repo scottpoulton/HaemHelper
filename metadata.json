@@ -1,0 +1,8 @@
+{
+  "name": "HaemHelper - Peripheral Blood Smear Classification & Training Suite",
+  "description": "Lightweight multi-class image classification and interactive training pipeline for haematology diagnostics and peripheral blood smear analysis.",
+  "permissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
